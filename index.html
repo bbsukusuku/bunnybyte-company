@@ -40,12 +40,14 @@ a{color:inherit}
 @keyframes drift{from{background-position:0 0}to{background-position:calc(-1*var(--tw)) calc(-1*var(--th))}}
 
 /* ── BB 라인업 + 로고: 한 덩어리 ── */
-.hero-visual{position:relative;padding-top:19%;   /* 라인업 머리 높이만큼만(비례) 확보 */
+.hero-visual{position:relative;
+  padding-top:calc(.19*min(480px,72vw));   /* 라인업 머리 높이 = 로고 너비의 19% */
   margin-bottom:clamp(48px,9vh,96px)}
 @media (max-width:720px){.hero-visual{padding-top:24vw}}
 /* 세로가 짧은 화면에서는 아바타+로고 비례 축소 (잘림·과밀 방지) */
 @media (max-height:960px) and (min-width:721px){
   .sticker{width:min(480px,72vw,34vh)}
+  .hero-visual{padding-top:calc(.19*min(480px,72vw,34vh))}
 }
 .lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
   width:312.5%;   /* 로고 대비 비율 고정(로고 480px일 때 1500px) — 로고와 함께 스케일 */
