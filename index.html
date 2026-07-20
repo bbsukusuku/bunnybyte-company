@@ -43,7 +43,7 @@ a{color:inherit}
 .hero-visual{position:relative;
   /* 라인업(고정 520px 높이)이 로고 위로 튀어나오는 만큼 확보: 492px - 로고 높이 */
   padding-top:calc(492px - .84*min(400px,72vw));
-  margin-bottom:clamp(48px,9vh,96px)}
+  margin-bottom:clamp(88px,14vh,150px)}
 @media (max-width:720px){.hero-visual{padding-top:24vw}}
 .lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
   width:1500px;   /* 아바타 라인업 고정 크기 (로고와 독립) */
@@ -67,14 +67,12 @@ a{color:inherit}
 
 .hero-inner{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;
-  padding:56px 24px 28px;gap:0}   /* 상단 56 = 하단 28 + 푸터 패딩 28 → 위아래 균형 */
+  padding:100px 24px 72px;gap:0}   /* 상단 100 = 하단 72 + 푸터 패딩 28 → 위아래 균형 */
 .sticker{position:relative;display:block;width:min(400px,72vw);height:auto;
   filter:drop-shadow(0 16px 40px rgba(0,0,0,.45));transform-origin:center;
   animation:stamp .5s cubic-bezier(.3,1.4,.4,1) .45s both,
             wig 3.6s cubic-bezier(.5,.05,.3,1) 1.4s infinite}
-/* 세로가 짧은 화면에서는 여백만 조임 (아바타는 1500 고정 유지) */
 @media (max-height:960px) and (min-width:721px){
-  .hero-visual{margin-bottom:clamp(28px,5vh,56px)}
   .bb-note{margin-bottom:30px}
 }
 @keyframes stamp{
