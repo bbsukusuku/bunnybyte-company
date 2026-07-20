@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bunnybyte</title>
+<meta name="description" content="플레이할수록 특별해지는 BB — 나만의 BB로 게임하고, 보상으로 꾸미고, 카드로 남기세요.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="bunnybyte">
+<meta property="og:title" content="bunnybyte">
+<meta property="og:description" content="플레이할수록 특별해지는 BB — 나만의 BB로 게임하고, 보상으로 꾸미고, 카드로 남기세요.">
+<meta property="og:url" content="https://bunnybyte.com">
+<meta property="og:image" content="https://bunnybyte.com/og_bunnybyte.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+:root{
+  --bg:#161616;
+  --tw:365px; --th:320px;      /* 타일 표시 크기 */
+  --drift:24s;
+  --magenta:#FF2E92;
+  --txt:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',-apple-system,'Apple SD Gothic Neo',sans-serif;background:var(--bg);color:var(--txt);
+  min-height:100dvh;display:flex;flex-direction:column}
+a{color:inherit}
+
+/* ── Hero ───────────────────────── */
+.hero{position:relative;overflow:hidden;
+  display:flex;flex-direction:column;flex:1;min-height:0}
+.bg{position:fixed;inset:-40%;z-index:-1;
+  background:url("bg_pattern.png") repeat;
+  background-size:var(--tw) var(--th);
+  animation:drift var(--drift) linear infinite;will-change:background-position}
+@keyframes drift{from{background-position:0 0}to{background-position:calc(-1*var(--tw)) calc(-1*var(--th))}}
+
+/* ── BB 라인업 + 로고: 한 덩어리 ── */
+.hero-visual{position:relative;padding-top:19%;   /* 라인업 머리 높이만큼만(비례) 확보 */
+  margin-bottom:clamp(48px,9vh,96px)}
+@media (max-width:720px){.hero-visual{padding-top:24vw}}
+/* 세로가 짧은 화면에서만 아바타+로고 비례 축소 (잘림 방지) */
+@media (max-height:820px) and (min-width:721px){
+  .sticker{width:min(480px,72vw,42vh)}
+}
+.lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
+  width:312.5%;   /* 로고 대비 비율 고정(로고 480px일 때 1500px) — 로고와 함께 스케일 */
+  pointer-events:none;user-select:none}
+@media (max-width:720px){.lineup{width:260vw;bottom:-6vw}}
+
+/* ── Nav ────────────────────────── */
+.nav{flex-shrink:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:0 32px;height:64px}
+.nav .logo img{height:20px;display:block;filter:invert(1)}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-link{font-size:15px;font-weight:600;color:rgba(255,255,255,.7);
+  text-decoration:none;transition:color .2s}
+.nav-link:hover{color:#fff}
+.nav-cta{padding:9px 20px;border-radius:999px;background:#fff;color:#111;
+  font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;
+  transition:transform .2s}
+.nav-cta:hover{transform:translateY(-1px)}
+@media (max-width:720px){.nav{padding:0 20px}.nav-right{gap:18px}}
+
+.hero-inner{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:24px;gap:0}
+.sticker{position:relative;display:block;width:min(480px,72vw);height:auto;
+  filter:drop-shadow(0 16px 40px rgba(0,0,0,.45));transform-origin:center;
+  animation:stamp .5s cubic-bezier(.3,1.4,.4,1) .45s both,
+            wig 3.6s cubic-bezier(.5,.05,.3,1) 1.4s infinite}
+@keyframes stamp{
+  0%{opacity:0;transform:scale(1.5) rotate(-7deg)}
+  60%{opacity:1;transform:scale(.96) rotate(1.5deg)}
+  100%{opacity:1;transform:scale(1) rotate(0)}
+}
+@keyframes rise{from{opacity:0;transform:translateX(-50%) translateY(30px)}
+  to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.lineup{animation:rise .6s ease .12s both}
+.hero-inner h1{animation:fadeup .5s ease .8s both}
+.hero-inner .sub{animation:fadeup .5s ease .9s both}
+.hero-inner .bb-note{animation:fadeup .5s ease .98s both}
+.hero-inner .cta{animation:fadeup .5s ease 1.08s both}
+@keyframes wig{
+  0%,55%,100%{transform:rotate(0) scale(1)}
+  58%{transform:rotate(0) scale(1.04,.95)}
+  64%{transform:rotate(-3deg) scale(.97,1.04)}
+  70%{transform:rotate(2.2deg) scale(1.02,.99)}
+  76%{transform:rotate(-1.4deg)}
+  82%{transform:rotate(.7deg)}
+  88%{transform:rotate(0)}
+}
+h1{font-size:clamp(28px,4.2vw,48px);font-weight:800;line-height:1.25;
+  margin-bottom:16px;word-break:keep-all}
+.sub{font-size:clamp(15px,1.6vw,19px);line-height:1.6;opacity:.72;
+  margin-bottom:12px;word-break:keep-all}
+.bb-note{font-size:13px;opacity:.6;margin-bottom:44px;word-break:keep-all}
+.cta{display:inline-flex;align-items:center;gap:10px;padding:18px 40px;border-radius:999px;
+  background:var(--txt);color:#111;font-size:18px;font-weight:800;text-decoration:none;
+  box-shadow:0 10px 32px rgba(0,0,0,.4);transition:transform .2s,box-shadow .2s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+.cta .arrow{transition:transform .2s}
+.cta:hover .arrow{transform:translateX(4px)}
+
+@media (prefers-reduced-motion:reduce){
+  .bg,.sticker,.lineup,.hero-inner h1,.hero-inner .sub,.hero-inner .bb-note,.hero-inner .cta{animation:none}
+}
+
+/* ── Floating social rail ───────── */
+.social-rail{position:absolute;right:24px;bottom:24px;z-index:9;
+  display:flex;flex-direction:column;gap:12px}
+.social-rail a{display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(255,255,255,.08);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.1);
+  transition:background .2s,transform .2s}
+.social-rail a:hover{background:rgba(255,255,255,.18);transform:translateX(-3px)}
+.social-rail svg{width:18px;height:18px;fill:#fff;display:block}
+@media (max-width:900px){.social-rail{display:none}}
+
+/* ── Footer ─────────────────────── */
+footer{padding:28px 24px;flex-shrink:0}
+.social{display:flex;justify-content:center;gap:36px;margin-bottom:32px}
+@media (min-width:901px){.social{display:none}}
+.social a{opacity:.92;transition:opacity .2s,transform .2s;display:block}
+.social a:hover{opacity:1;transform:translateY(-2px)}
+.social svg{width:26px;height:26px;fill:#fff;display:block}
+.legal{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;
+  align-items:center;gap:24px;flex-wrap:wrap;
+  font-size:14px;color:rgba(255,255,255,.55)}
+.legal a{text-decoration:underline;text-underline-offset:3px}
+.legal .row{display:contents}
+@media (max-width:720px){
+  .legal{flex-direction:column;align-items:flex-start;gap:12px}
+  .legal .row{width:100%;display:flex;justify-content:space-between}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true"></div>
+
+<nav class="nav">
+  <a class="logo" href="index.html"><img src="logo_word.svg" alt="bunnybyte"></a>
+  <div class="nav-right">
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-cta" href="https://bunnybyte.app">Play</a>
+  </div>
+</nav>
+
+<section class="hero">
+<aside class="social-rail" aria-label="소셜 미디어 바로가기">
+  <a href="#" aria-label="Instagram">
+    <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.15A3.99 3.99 0 1 1 16 12a3.99 3.99 0 0 1-4 3.99zm6.4-11.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+  </a>
+  <a href="#" aria-label="X">
+    <svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg>
+  </a>
+  <a href="#" aria-label="Discord">
+    <svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.37-.44.86-.6 1.25a18.3 18.3 0 0 0-5.5 0c-.16-.4-.4-.88-.61-1.25a.08.08 0 0 0-.08-.04 19.74 19.74 0 0 0-4.88 1.52.07.07 0 0 0-.04.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.29a.07.07 0 0 1 .08-.01c3.93 1.8 8.18 1.8 12.06 0a.07.07 0 0 1 .08.01c.12.1.25.2.37.3a.08.08 0 0 1 0 .12c-.6.35-1.22.65-1.88.9a.08.08 0 0 0-.04.1c.36.7.77 1.37 1.23 2a.08.08 0 0 0 .08.02 19.84 19.84 0 0 0 6-3.03.08.08 0 0 0 .04-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.98 0c-1.19 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.2 0 2.17 1.1 2.15 2.42 0 1.34-.94 2.42-2.15 2.42z"/></svg>
+  </a>
+</aside>
+  <div class="hero-inner">
+    <div class="hero-visual">
+      <img class="lineup" src="hero_lineup.webp" alt="" aria-hidden="true">
+      <img class="sticker" src="logo_sticker.png" alt="BUNNY BYTE!">
+    </div>
+    <h1>플레이할수록 특별해지는 <span class="bb">BB</span></h1>
+    <p class="sub"><span class="bb">BB</span>와 함께 게임하고, 성취하고,<br>나만의 카드까지 만들어 보세요.</p>
+    <p class="bb-note">*BB는 버니바이트 세계 속 나의 아바타예요</p>
+    <a class="cta" href="https://bunnybyte.app">버니바이트 플레이 <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<footer>
+  <nav class="social" aria-label="소셜 미디어">
+    <a href="#" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.15A3.99 3.99 0 1 1 16 12a3.99 3.99 0 0 1-4 3.99zm6.4-11.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+    </a>
+    <a href="#" aria-label="X">
+      <svg viewBox="0 0 24 24"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg>
+    </a>
+    <a href="#" aria-label="Discord">
+      <svg viewBox="0 0 24 24"><path d="M20.32 4.37a19.8 19.8 0 0 0-4.89-1.52.07.07 0 0 0-.08.04c-.21.37-.44.86-.6 1.25a18.3 18.3 0 0 0-5.5 0c-.16-.4-.4-.88-.61-1.25a.08.08 0 0 0-.08-.04 19.74 19.74 0 0 0-4.88 1.52.07.07 0 0 0-.04.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13.1 13.1 0 0 1-1.87-.9.08.08 0 0 1-.01-.13c.13-.09.25-.19.37-.29a.07.07 0 0 1 .08-.01c3.93 1.8 8.18 1.8 12.06 0a.07.07 0 0 1 .08.01c.12.1.25.2.37.3a.08.08 0 0 1 0 .12c-.6.35-1.22.65-1.88.9a.08.08 0 0 0-.04.1c.36.7.77 1.37 1.23 2a.08.08 0 0 0 .08.02 19.84 19.84 0 0 0 6-3.03.08.08 0 0 0 .04-.05c.5-5.18-.84-9.68-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.98 0c-1.19 0-2.16-1.08-2.16-2.42s.95-2.42 2.16-2.42c1.2 0 2.17 1.1 2.15 2.42 0 1.34-.94 2.42-2.15 2.42z"/></svg>
+    </a>
+  </nav>
+  <div class="legal">
+    <div class="row">
+      <a href="https://bunnybyte.app/account/terms/service">Privacy &amp; Terms</a>
+      <a href="mailto:official@bunnybyte.com">official@bunnybyte.com</a>
+    </div>
+    <span>©2026 bunnybyte. All rights reserved.</span>
+    <span>경기 성남시 분당구 판교로 253, C동 1002-2호</span>
+  </div>
+</footer>
+
+</body>
+</html>
