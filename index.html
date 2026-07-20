@@ -44,11 +44,6 @@ a{color:inherit}
   padding-top:calc(.46*min(400px,72vw) - 28px);   /* 라인업 머리 높이(비례) 확보 */
   margin-bottom:clamp(48px,9vh,96px)}
 @media (max-width:720px){.hero-visual{padding-top:24vw}}
-/* 세로가 짧은 화면에서는 아바타+로고 비례 축소 (잘림·과밀 방지) */
-@media (max-height:960px) and (min-width:721px){
-  .sticker{width:min(400px,72vw,34vh)}
-  .hero-visual{padding-top:calc(.46*min(400px,72vw,34vh) - 28px)}
-}
 .lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
   width:375%;   /* 로고 대비 비율 고정(로고 400px일 때 1500px) — 로고와 함께 스케일 */
   pointer-events:none;user-select:none}
@@ -76,6 +71,12 @@ a{color:inherit}
   filter:drop-shadow(0 16px 40px rgba(0,0,0,.45));transform-origin:center;
   animation:stamp .5s cubic-bezier(.3,1.4,.4,1) .45s both,
             wig 3.6s cubic-bezier(.5,.05,.3,1) 1.4s infinite}
+/* 세로가 짧은 화면에서는 아바타+로고 비례 축소 (잘림·과밀 방지)
+   ※ .sticker 기본 정의보다 반드시 뒤에 위치해야 함 */
+@media (max-height:960px) and (min-width:721px){
+  .sticker{width:min(400px,72vw,34vh)}
+  .hero-visual{padding-top:calc(.46*min(400px,72vw,34vh) - 28px)}
+}
 @keyframes stamp{
   0%{opacity:0;transform:scale(1.5) rotate(-7deg)}
   60%{opacity:1;transform:scale(.96) rotate(1.5deg)}
@@ -174,7 +175,7 @@ footer{padding:28px 24px;flex-shrink:0}
       <img class="sticker" src="logo_sticker.png" alt="BUNNY BYTE!">
     </div>
     <h1>플레이할수록 특별해지는 <span class="bb">BB</span></h1>
-    <p class="sub"><span class="bb">BB</span>와 함께 게임하고, 성취하고,<br>나만의 카드까지 만들어 보세요.</p>
+    <p class="sub"><span class="bb">BB</span>와 함께 게임하고, 성취하고, 나만의 카드까지 만들어 보세요.</p>
     <p class="bb-note">*BB는 버니바이트 세계 속 나의 아바타예요</p>
     <a class="cta" href="https://bunnybyte.app">버니바이트 플레이 <span class="arrow">→</span></a>
   </div>
