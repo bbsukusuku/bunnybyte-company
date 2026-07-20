@@ -98,13 +98,14 @@ a{color:inherit}
   82%{transform:rotate(.7deg)}
   88%{transform:rotate(0)}
 }
-h1{font-size:clamp(28px,4.2vw,48px);font-weight:800;line-height:1.25;
+h1{font-size:clamp(28px,4.2vw,48px);font-weight:900;line-height:1.25;
   margin-bottom:16px;word-break:keep-all}
-.sub{font-size:clamp(15px,1.6vw,19px);line-height:1.6;opacity:.72;
+.sub{font-size:clamp(15px,1.6vw,19px);font-weight:700;line-height:1.6;opacity:.72;
   margin-bottom:12px;word-break:keep-all}
-.bb-note{font-size:13px;opacity:.6;margin-bottom:44px;word-break:keep-all}
+.sub .nb{display:inline-block}   /* 좁은 화면에서 두 줄이 될 때 "나만의 카드~"가 통째로 다음 줄로 */
+.bb-note{font-size:13px;font-weight:600;opacity:.6;margin-bottom:44px;word-break:keep-all}
 .cta{display:inline-flex;align-items:center;gap:10px;padding:18px 40px;border-radius:999px;
-  background:var(--txt);color:#111;font-size:18px;font-weight:800;text-decoration:none;
+  background:var(--txt);color:#111;font-size:18px;font-weight:900;text-decoration:none;
   box-shadow:0 10px 32px rgba(0,0,0,.4);transition:transform .2s,box-shadow .2s}
 .cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,0,0,.5)}
 .cta .arrow{transition:transform .2s}
@@ -174,7 +175,7 @@ footer{padding:28px 24px;flex-shrink:0}
       <img class="sticker" src="logo_sticker.png" alt="BUNNY BYTE!">
     </div>
     <h1>플레이할수록 특별해지는 <span class="bb">BB</span></h1>
-    <p class="sub"><span class="bb">BB</span>와 함께 게임하고, 성취하고, 나만의 카드까지 만들어 보세요.</p>
+    <p class="sub"><span class="bb">BB</span>와 함께 게임하고, 성취하고, <span class="nb">나만의 카드까지 만들어 보세요.</span></p>
     <p class="bb-note">*BB는 버니바이트 세계 속 나의 아바타예요</p>
     <a class="cta" href="https://bunnybyte.app">버니바이트 플레이 <span class="arrow">→</span></a>
   </div>
