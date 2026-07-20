@@ -39,16 +39,20 @@ a{color:inherit}
   animation:drift var(--drift) linear infinite;will-change:background-position}
 @keyframes drift{from{background-position:0 0}to{background-position:calc(-1*var(--tw)) calc(-1*var(--th))}}
 
-/* ── BB 라인업 + 로고: 한 덩어리 ── */
-.hero-visual{position:relative;
-  /* 라인업(고정 520px 높이)이 로고 위로 튀어나오는 만큼 확보: 492px - 로고 높이 */
-  padding-top:calc(492px - .84*min(400px,72vw));
+/* ── BB 라인업 + 로고 스티커: 한 덩어리 ── */
+.hero-visual{position:relative;width:0;height:492px;   /* 라인업 기준 고정 박스 */
   margin-bottom:clamp(88px,14vh,150px)}
-@media (max-width:720px){.hero-visual{padding-top:24vw}}
 .lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
-  width:1500px;   /* 아바타 라인업 고정 크기 (로고와 독립) */
+  width:1500px;   /* 아바타 라인업 고정 크기 */
   pointer-events:none;user-select:none}
-@media (max-width:720px){.lineup{width:260vw;bottom:-6vw}}
+.sticker-pos{position:absolute;left:50%;bottom:170px;
+  transform:translate(-50%,50%);   /* 스티커 비율이 달라도 세로 중심 고정 */
+  width:min(400px,72vw)}
+@media (max-width:720px){
+  .hero-visual{height:84vw}
+  .lineup{width:260vw;bottom:-6vw}
+  .sticker-pos{bottom:30vw}
+}
 
 /* ── Nav ────────────────────────── */
 .nav{position:sticky;top:0;flex-shrink:0;z-index:10;
@@ -69,7 +73,7 @@ a{color:inherit}
 .hero-inner{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;
   padding:100px 24px 72px;gap:0}   /* 상단 100 = 하단 72 + 푸터 패딩 28 → 위아래 균형 */
-.sticker{position:relative;display:block;width:min(400px,72vw);height:auto;
+.sticker{position:relative;display:block;width:100%;height:auto;
   filter:drop-shadow(0 16px 40px rgba(0,0,0,.45));transform-origin:center;
   animation:stamp .5s cubic-bezier(.3,1.4,.4,1) .45s both,
             wig 3.6s cubic-bezier(.5,.05,.3,1) 1.4s infinite}
@@ -99,7 +103,7 @@ a{color:inherit}
   82%{transform:rotate(.7deg)}
   88%{transform:rotate(0)}
 }
-h1{font-size:clamp(28px,4.2vw,48px);font-weight:900;line-height:1.25;
+h1{font-size:clamp(28px,4.2vw,48px);font-weight:800;line-height:1.25;
   margin-bottom:16px;word-break:keep-all}
 .sub{font-size:clamp(15px,1.6vw,19px);font-weight:700;line-height:1.6;opacity:.72;
   margin-bottom:12px;word-break:keep-all}
@@ -173,7 +177,9 @@ footer{padding:28px 24px;flex-shrink:0}
   <div class="hero-inner">
     <div class="hero-visual">
       <img class="lineup" src="hero_lineup.webp" alt="" aria-hidden="true">
-      <img class="sticker" src="logo_sticker.png" alt="BUNNY BYTE!">
+      <div class="sticker-pos">
+        <img class="sticker" id="stickerLogo" src="sticker_logo_bunnybyte_01.svg" alt="bunnybyte">
+      </div>
     </div>
     <h1>플레이할수록 특별해지는 <span class="bb">BB</span></h1>
     <p class="sub"><span class="bb">BB</span>와 함께 게임하고, 성취하고, <span class="nb">나만의 카드까지 만들어 보세요.</span></p>
@@ -204,5 +210,13 @@ footer{padding:28px 24px;flex-shrink:0}
   </div>
 </footer>
 
+<script>
+// 로고 스티커 7종 중 랜덤 등장
+(function(){
+  const n = Math.floor(Math.random()*7)+1;
+  document.getElementById('stickerLogo').src =
+    'sticker_logo_bunnybyte_0'+n+'.svg';
+})();
+</script>
 </body>
 </html>
