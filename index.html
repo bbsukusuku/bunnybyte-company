@@ -51,9 +51,10 @@ a{color:inherit}
 @media (max-width:720px){.lineup{width:260vw;bottom:-6vw}}
 
 /* ── Nav ────────────────────────── */
-.nav{flex-shrink:0;z-index:10;
+.nav{position:sticky;top:0;flex-shrink:0;z-index:10;
   display:flex;align-items:center;justify-content:space-between;gap:24px;
-  padding:0 32px;height:64px}
+  padding:0 32px;height:64px;
+  background:rgba(22,22,22,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .nav .logo img{height:20px;display:block;filter:invert(1)}
 .nav-right{display:flex;align-items:center;gap:28px}
 .nav-link{font-size:15px;font-weight:600;color:rgba(255,255,255,.7);
