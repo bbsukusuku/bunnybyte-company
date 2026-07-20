@@ -41,11 +41,12 @@ a{color:inherit}
 
 /* ── BB 라인업 + 로고: 한 덩어리 ── */
 .hero-visual{position:relative;
-  padding-top:calc(.46*min(400px,72vw) - 28px);   /* 라인업 머리 높이(비례) 확보 */
+  /* 라인업(고정 520px 높이)이 로고 위로 튀어나오는 만큼 확보: 492px - 로고 높이 */
+  padding-top:calc(492px - .84*min(400px,72vw));
   margin-bottom:clamp(48px,9vh,96px)}
 @media (max-width:720px){.hero-visual{padding-top:24vw}}
 .lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
-  width:375%;   /* 로고 대비 비율 고정(로고 400px일 때 1500px) — 로고와 함께 스케일 */
+  width:1500px;   /* 아바타 라인업 고정 크기 (로고와 독립) */
   pointer-events:none;user-select:none}
 @media (max-width:720px){.lineup{width:260vw;bottom:-6vw}}
 
@@ -71,11 +72,10 @@ a{color:inherit}
   filter:drop-shadow(0 16px 40px rgba(0,0,0,.45));transform-origin:center;
   animation:stamp .5s cubic-bezier(.3,1.4,.4,1) .45s both,
             wig 3.6s cubic-bezier(.5,.05,.3,1) 1.4s infinite}
-/* 세로가 짧은 화면에서는 아바타+로고 비례 축소 (잘림·과밀 방지)
-   ※ .sticker 기본 정의보다 반드시 뒤에 위치해야 함 */
+/* 세로가 짧은 화면에서는 여백만 조임 (아바타는 1500 고정 유지) */
 @media (max-height:960px) and (min-width:721px){
-  .sticker{width:min(400px,72vw,34vh)}
-  .hero-visual{padding-top:calc(.46*min(400px,72vw,34vh) - 28px)}
+  .hero-visual{margin-bottom:clamp(28px,5vh,56px)}
+  .bb-note{margin-bottom:30px}
 }
 @keyframes stamp{
   0%{opacity:0;transform:scale(1.5) rotate(-7deg)}
@@ -84,7 +84,8 @@ a{color:inherit}
 }
 @keyframes rise{from{opacity:0;transform:translateX(-50%) translateY(30px)}
   to{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{transform:none}}
+/* to에서 opacity 생략 → 각 요소의 원래 투명도(.sub .72, .bb-note .6)로 수렴 */
 .lineup{animation:rise .6s ease .12s both}
 .hero-inner h1{animation:fadeup .5s ease .8s both}
 .hero-inner .sub{animation:fadeup .5s ease .9s both}
