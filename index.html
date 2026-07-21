@@ -43,14 +43,25 @@ a{color:inherit}
 .hero-visual{position:relative;width:0;height:492px;   /* 라인업 기준 고정 박스 */
   margin-bottom:clamp(88px,14vh,150px)}
 .lineup{position:absolute;left:50%;bottom:-28px;transform:translateX(-50%);
-  width:1500px;   /* 아바타 라인업 고정 크기 */
+  height:520px;display:flex;align-items:flex-end;   /* 기존 1500px 라인업과 동일 높이 */
   pointer-events:none;user-select:none}
+.bb-a{display:block;height:100%;margin:0 -75px;   /* 어깨 겹침 정도 */
+  animation:bbpop .55s cubic-bezier(.3,1.5,.4,1) calc(.15s + var(--d)) both,
+            bbob 3.4s ease-in-out calc(1s + var(--d)*3) infinite}
+.bb-a:nth-child(6){margin-left:-20px}
+.bb-a img{height:100%;width:auto;display:block;pointer-events:auto;
+  transition:transform .3s cubic-bezier(.3,1.6,.4,1)}
+.bb-a:hover img{transform:translateY(-18px)}   /* 호버: 폴짝 */
+@keyframes bbpop{from{opacity:0;transform:translateY(70px)}to{opacity:1;transform:none}}
+@keyframes bbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 .sticker-pos{position:absolute;left:50%;bottom:170px;
   transform:translate(-50%,50%);   /* 스티커 비율이 달라도 세로 중심 고정 */
   width:min(400px,72vw)}
 @media (max-width:720px){
   .hero-visual{height:84vw}
-  .lineup{width:260vw;bottom:-6vw}
+  .lineup{height:90vw;bottom:-6vw}
+  .bb-a{margin:0 -13vw}
+  .bb-a:nth-child(6){margin-left:-3.5vw}
   .sticker-pos{bottom:30vw}
 }
 
@@ -85,11 +96,8 @@ a{color:inherit}
   60%{opacity:1;transform:scale(.96) rotate(1.5deg)}
   100%{opacity:1;transform:scale(1) rotate(0)}
 }
-@keyframes rise{from{opacity:0;transform:translateX(-50%) translateY(30px)}
-  to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{transform:none}}
 /* to에서 opacity 생략 → 각 요소의 원래 투명도(.sub .72, .bb-note .6)로 수렴 */
-.lineup{animation:rise .6s ease .12s both}
 .hero-inner h1{animation:fadeup .5s ease .8s both}
 .hero-inner .sub{animation:fadeup .5s ease .9s both}
 .hero-inner .bb-note{animation:fadeup .5s ease .98s both}
@@ -117,7 +125,8 @@ h1{font-size:clamp(28px,4.2vw,48px);font-weight:800;line-height:1.25;
 .cta:hover .arrow{transform:translateX(4px)}
 
 @media (prefers-reduced-motion:reduce){
-  .bg,.sticker,.lineup,.hero-inner h1,.hero-inner .sub,.hero-inner .bb-note,.hero-inner .cta{animation:none}
+  .bg,.sticker,.bb-a,.hero-inner h1,.hero-inner .sub,.hero-inner .bb-note,.hero-inner .cta{animation:none}
+  .bb-a{opacity:1}
 }
 
 /* ── Floating social rail ───────── */
@@ -176,7 +185,18 @@ footer{padding:28px 24px;flex-shrink:0}
 </aside>
   <div class="hero-inner">
     <div class="hero-visual">
-      <img class="lineup" src="hero_lineup.webp" alt="" aria-hidden="true">
+      <div class="lineup" aria-hidden="true">
+        <span class="bb-a" style="--d:.36s"><img src="bb01.png" alt=""></span>
+        <span class="bb-a" style="--d:.28s"><img src="bb02.png" alt=""></span>
+        <span class="bb-a" style="--d:.20s"><img src="bb03.png" alt=""></span>
+        <span class="bb-a" style="--d:.12s"><img src="bb04.png" alt=""></span>
+        <span class="bb-a" style="--d:.04s"><img src="bb05.png" alt=""></span>
+        <span class="bb-a" style="--d:.04s"><img src="bb06.png" alt=""></span>
+        <span class="bb-a" style="--d:.12s"><img src="bb07.png" alt=""></span>
+        <span class="bb-a" style="--d:.20s"><img src="bb08.png" alt=""></span>
+        <span class="bb-a" style="--d:.28s"><img src="bb09.png" alt=""></span>
+        <span class="bb-a" style="--d:.36s"><img src="bb10.png" alt=""></span>
+      </div>
       <div class="sticker-pos">
         <img class="sticker" id="stickerLogo" src="sticker_logo_bunnybyte_01.svg" alt="bunnybyte">
       </div>
