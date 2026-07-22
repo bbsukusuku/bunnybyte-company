@@ -54,6 +54,16 @@ a{color:inherit}
 .bb-a:hover img{transform:translateY(-18px)}   /* 호버: 폴짝 */
 @keyframes bbpop{from{opacity:0;transform:translateY(70px)}to{opacity:1;transform:none}}
 @keyframes bbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+/* 호버/탭 시 머리 위 이모지 팝 */
+.bb-a{position:relative}
+.emo{position:absolute;left:50%;top:4%;font-size:34px;line-height:1;
+  pointer-events:none;z-index:5;
+  animation:emoFly .95s ease-out forwards}
+@keyframes emoFly{
+  0%{opacity:0;transform:translate(-50%,14px) scale(.4)}
+  18%{opacity:1;transform:translate(-50%,-10px) scale(1.15)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),-85px) scale(1) rotate(var(--rot,0deg))}
+}
 .sticker-pos{position:absolute;left:50%;bottom:170px;
   transform:translate(-50%,50%);   /* 스티커 비율이 달라도 세로 중심 고정 */
   width:min(400px,72vw)}
@@ -258,6 +268,24 @@ footer{padding:28px 24px;flex-shrink:0}
     [srcs[i],srcs[j]] = [srcs[j],srcs[i]];
   }
   document.querySelectorAll('.bb-a img').forEach((img,i)=>img.src = srcs[i]);
+})();
+// 아바타 호버/탭 → 머리 위 랜덤 이모지 팝
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const EMO=['😆','🤩','😝','😎','🥳','😍','❤️','💖','🫶','✨','⚡','🔥'];
+  document.querySelectorAll('.bb-a img').forEach(img=>{
+    let last=0;
+    img.addEventListener('pointerenter',()=>{
+      const now=Date.now(); if(now-last<450)return; last=now;
+      const s=document.createElement('span');
+      s.className='emo';
+      s.textContent=EMO[Math.floor(Math.random()*EMO.length)];
+      s.style.setProperty('--dx',(Math.random()*60-30).toFixed(0)+'px');
+      s.style.setProperty('--rot',(Math.random()*40-20).toFixed(0)+'deg');
+      img.parentElement.appendChild(s);
+      s.addEventListener('animationend',()=>s.remove());
+    });
+  });
 })();
 </script>
 </body>
