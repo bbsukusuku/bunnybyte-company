@@ -237,6 +237,15 @@ footer{padding:28px 24px;flex-shrink:0}
   document.getElementById('stickerLogo').src =
     'sticker_logo_bunnybyte_0'+n+'.svg';
 })();
+// 아바타 10명 셔플 → 왼쪽 5자리 / 오른쪽 5자리 랜덤 배치
+(function(){
+  const srcs = Array.from({length:10},(_,i)=>'bb'+String(i+1).padStart(2,'0')+'.png');
+  for(let i=srcs.length-1;i>0;i--){          // Fisher–Yates 셔플
+    const j = Math.floor(Math.random()*(i+1));
+    [srcs[i],srcs[j]] = [srcs[j],srcs[i]];
+  }
+  document.querySelectorAll('.bb-a img').forEach((img,i)=>img.src = srcs[i]);
+})();
 </script>
 </body>
 </html>
