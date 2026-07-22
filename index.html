@@ -52,6 +52,8 @@ a{color:inherit}
 .bb-a img{height:100%;width:auto;display:block;pointer-events:auto;
   transition:transform .3s cubic-bezier(.3,1.6,.4,1)}
 .bb-a:hover img{transform:translateY(-18px)}   /* 호버: 폴짝 */
+.bb-a.dragging{z-index:7}
+.bb-a.dragging img{transform:translateY(-12px) scale(1.06);cursor:grabbing}
 @keyframes bbpop{from{opacity:0;transform:translateY(70px)}to{opacity:1;transform:none}}
 @keyframes bbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 /* 호버/탭 시 머리 위 이모지 팝 */
@@ -284,6 +286,70 @@ footer{padding:28px 24px;flex-shrink:0}
       s.style.setProperty('--rot',(Math.random()*40-20).toFixed(0)+'deg');
       img.parentElement.appendChild(s);
       s.addEventListener('animationend',()=>s.remove());
+    });
+  });
+})();
+// 아바타 드래그 → 무리가 실시간으로 벌어지고 좁혀지며 재정렬 (sortable + FLIP)
+(function(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const track=document.querySelector('.lineup');
+  document.querySelectorAll('.bb-a img').forEach(img=>{
+    img.draggable=false;
+    img.style.cursor='grab';
+    img.style.touchAction='none';
+    img.addEventListener('pointerdown',e=>{
+      e.preventDefault();
+      const a=img.parentElement;
+      const sx=e.clientX, sy=e.clientY;
+      const r0=a.getBoundingClientRect();
+      let moved=false, raf=null;
+      a.style.transition='none';
+      img.setPointerCapture(e.pointerId);
+
+      const flip=(el,delta)=>{           // 옆 아바타 밀림/좁힘 애니메이션
+        const cur=parseFloat(getComputedStyle(el).translate)||0;
+        el.style.transition='none';
+        el.style.translate=(cur+delta)+'px 0';
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          el.style.transition='translate .35s cubic-bezier(.3,1.2,.4,1)';
+          el.style.translate='0 0';
+        }));
+      };
+
+      const onMove=ev=>{
+        const dx=ev.clientX-sx, dy=ev.clientY-sy;
+        if(!moved&&Math.hypot(dx,dy)>6){moved=true;a.classList.add('dragging');a.style.zIndex=7;}
+        if(!moved)return;
+        if(raf)return;
+        raf=requestAnimationFrame(()=>{
+          raf=null;
+          const tr=track.getBoundingClientRect();
+          // 드래그 요소는 항상 포인터를 따라감 (레이아웃 슬롯이 바뀌어도)
+          a.style.translate=(r0.left+dx-(tr.left+a.offsetLeft))+'px '+dy+'px';
+          // 포인터 X 기준 삽입 위치 계산
+          const sib=[...track.children].filter(s=>s!==a);
+          const before=sib.find(s=>ev.clientX < tr.left+s.offsetLeft+s.offsetWidth/2);
+          const target=before||null;
+          if((target&&a.nextElementSibling!==target)||(!target&&track.lastElementChild!==a)){
+            const prev=sib.map(s=>[s,s.offsetLeft]);
+            track.insertBefore(a,target);           // 재정렬
+            prev.forEach(([s,l1])=>{const d=l1-s.offsetLeft;if(d)flip(s,d);});
+          }
+        });
+      };
+      const onUp=()=>{
+        img.removeEventListener('pointermove',onMove);
+        img.removeEventListener('pointerup',onUp);
+        img.removeEventListener('pointercancel',onUp);
+        a.classList.remove('dragging');
+        if(!moved){a.style.transition='';a.style.zIndex='';return;}
+        a.style.transition='translate .5s cubic-bezier(.3,1.25,.4,1)';
+        a.style.translate='0 0';                     // 현재 슬롯에 안착
+        setTimeout(()=>{a.style.transition='';a.style.zIndex='';},560);
+      };
+      img.addEventListener('pointermove',onMove);
+      img.addEventListener('pointerup',onUp);
+      img.addEventListener('pointercancel',onUp);
     });
   });
 })();
