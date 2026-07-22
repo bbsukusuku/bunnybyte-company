@@ -237,6 +237,19 @@ footer{padding:28px 24px;flex-shrink:0}
   document.getElementById('stickerLogo').src =
     'sticker_logo_bunnybyte_0'+n+'.svg';
 })();
+// 비한국어 브라우저 → 랜딩 카피 영어로
+(function(){
+  if((navigator.language||'').toLowerCase().startsWith('ko'))return;
+  document.documentElement.lang='en';
+  document.querySelector('.hero-inner h1').innerHTML =
+    'The more you play,<br>the more special your <span class="bb">BB</span>';
+  document.querySelector('.sub').innerHTML =
+    'Game with <span class="bb">BB</span>, achieve, <span class="nb">and create your own cards.</span>';
+  document.querySelector('.bb-note').textContent =
+    '*BB is your avatar in the bunnybyte world';
+  document.querySelector('.cta').innerHTML =
+    'Play bunnybyte <span class="arrow">→</span>';
+})();
 // 아바타 10명 셔플 → 왼쪽 5자리 / 오른쪽 5자리 랜덤 배치
 (function(){
   const srcs = Array.from({length:10},(_,i)=>'bb'+String(i+1).padStart(2,'0')+'.png');
